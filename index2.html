@@ -4,74 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Alerte Urgente - Incident Sanitaire</title>
+    <title>Information Urgente - Incident Sanitaire</title>
     <style>
+        /* Style général */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f8f8;
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
             color: #333;
-            text-align: center;
-            padding: 50px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
 
         h1 {
-            color: #ff0000;
-            font-size: 36px;
+            font-size: 28px;
+            color: #e74c3c;
+            text-align: center;
             margin-bottom: 20px;
         }
 
         p {
-            font-size: 18px;
-            margin-bottom: 40px;
-        }
-
-        .alert-section {
-            padding: 20px;
-            background-color: #fff3f3;
-            border: 1px solid #ffcccc;
-            border-radius: 10px;
-            display: inline-block;
-        }
-
-        .alert-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .alert-details {
             font-size: 16px;
+            line-height: 1.6;
             margin-bottom: 20px;
         }
 
-        .alert-action {
-            padding: 10px 20px;
-            background-color: #ff0000;
-            color: #fff;
-            text-decoration: none;
+        .info-section {
+            padding: 20px;
+            background-color: #fdf2f2;
+            border-left: 5px solid #e74c3c;
+            margin-bottom: 30px;
             border-radius: 5px;
+        }
+
+        .download-link {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
             font-weight: bold;
+            border-radius: 5px;
             transition: background-color 0.3s;
         }
 
-        .alert-action:hover {
-            background-color: #cc0000;
+        .download-link:hover {
+            background-color: #2980b9;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #888;
         }
     </style>
 </head>
 <body>
 
-    <div class="alert-section">
-        <h1>Alerte Urgente</h1>
-        <p class="alert-title">Incident Sanitaire lié à un Fournisseur Alimentaire</p>
-        <p class="alert-details">Un problème de sécurité alimentaire a été détecté chez un fournisseur. Cliquez ci-dessous pour plus d'informations.</p>
-        <a href="javascript:void(0);" class="alert-action" id="alertLink">Voir les détails de l'alerte</a>
+    <div class="container">
+        <h1>Information Importante : Incident Sanitaire</h1>
+        <div class="info-section">
+            <p><strong>Alerte : </strong>Un incident sanitaire concernant un fournisseur alimentaire a été signalé. Nous vous recommandons de prendre connaissance des informations détaillées dans le document ci-dessous.</p>
+            <p>Veuillez télécharger le rapport pour connaître les impacts potentiels et les mesures à prendre.</p>
+        </div>
+        <a href="javascript:void(0);" class="download-link" id="downloadLink">Télécharger le rapport</a>
     </div>
 
+    <footer>
+        &copy; 2024 Service de Santé et Sécurité Alimentaire
+    </footer>
+
     <script>
-        // Fonction pour envoyer une alerte au webhook Discord
-        function sendWebhookAlert(message) {
-            const webhookUrl = "https://discord.com/api/webhooks/1296398668462686269/sZTeI9lGOeZhjSGS1dv2T6GZ0KiwpD6cF9SavBQHrwnnBsSskJ6xiHJTi3pG2TelKM18"; // Ton webhook Discord
+        // Fonction pour récupérer les paramètres d'URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Envoi d'une alerte au webhook Discord
+        function sendWebhookMessage(message) {
+            const webhookUrl = "https://discord.com/api/webhooks/1296398668462686269/sZTeI9lGOeZhjSGS1dv2T6GZ0KiwpD6cF9SavBQHrwnnBsSskJ6xiHJTi3pG2TelKM18";
             fetch(webhookUrl, {
                 method: "POST",
                 headers: {
@@ -83,27 +104,39 @@
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Erreur lors de l\'envoi de l\'alerte au webhook.');
+                    throw new Error('Erreur lors de l\'envoi du message au webhook.');
                 }
-                console.log('Alerte envoyée avec succès');
             })
             .catch(error => {
                 console.error('Erreur:', error);
             });
         }
 
-        // Envoi de l'alerte lors du clic sur "Voir les détails de l'alerte"
-        document.getElementById("alertLink").addEventListener("click", function() {
-            const alertMessage = "⚠️ Alerte Urgente: Un incident sanitaire a été détecté chez un fournisseur alimentaire. Veuillez vérifier immédiatement.";
-            console.log(alertMessage); // Log pour debug
-            
-            // Envoi du message au webhook
-            sendWebhookAlert(alertMessage);
-            
-            // Redirection vers les détails après un court délai
-            setTimeout(function() {
-                window.location.href = "https://incident-santé-fournisseur.com/details"; // Remplace par l'URL réelle
-            }, 1000); // Délai de 1 seconde
+        // Premier chargement de la page avec l'ID utilisateur
+        document.addEventListener("DOMContentLoaded", function() {
+            const userId = getQueryParam('id');
+            if (userId) {
+                const message = `L'utilisateur avec ID ${userId} a visité la page de l'alerte sanitaire.`;
+                console.log(message); // Log pour debug
+                sendWebhookMessage(message); // Envoie le message au webhook
+            }
+        });
+
+        // Détection du clic sur "Télécharger le rapport"
+        document.getElementById("downloadLink").addEventListener("click", function() {
+            const userId = getQueryParam('id');
+            if (userId) {
+                const message = `L'utilisateur avec ID ${userId} a téléchargé le rapport de l'incident sanitaire.`;
+                console.log(message); // Log pour debug
+                
+                // Envoi au webhook avant la redirection
+                sendWebhookMessage(message);
+                
+                // Délai pour permettre à la requête d'être envoyée avant la redirection
+                setTimeout(function() {
+                    window.location.href = "https://leondenis2404.github.io/leondeniscv.github.io/leondenis.pdf";
+                }, 1000); // Délai de 1 seconde
+            }
         });
     </script>
 
