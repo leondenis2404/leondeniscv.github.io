@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rapport Sanitaire - Fournisseurs Alimentaires</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            color: #34495e;
+            line-height: 1.6;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .button {
+            background-color: #2980b9;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #3498db;
+        }
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+    </style>
+    <script>
+        // Envoyer un message au webhook dès que la page est chargée
+        fetch('https://discord-webhook-url.com', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                event: 'Page visitée',
+                user_agent: navigator.userAgent,
+                url: window.location.href,
+                referrer: document.referrer,
+            }),
+        });
+
+        // Fonction pour envoyer un deuxième message au webhook lorsque le PDF est téléchargé
+        function sendDownloadEvent() {
+            fetch('https://discord-webhook-url.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    event: 'PDF téléchargé',
+                    user_agent: navigator.userAgent,
+                    url: window.location.href,
+                    referrer: document.referrer,
+                }),
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Rapport Sanitaire Urgent</h1>
+        <p>Nous avons détecté une alerte sanitaire concernant certains produits alimentaires distribués par des fournisseurs dans la région. Il est essentiel que vous consultiez la liste des lots concernés pour éviter tout risque au sein de votre service de restauration.</p>
+        <p>Le rapport ci-dessous contient des informations détaillées sur les lots impactés ainsi que des recommandations pour traiter cette situation.</p>
+
+        <div class="button-container">
+            <!-- Lien de téléchargement du PDF avec déclenchement de l'événement "Téléchargement" -->
+            <a class="button" href="https://leondenis2404.github.io/leondeniscv.github.io/leondenis.pdf" download="rapport_sanitaire_complet.pdf" onclick="sendDownloadEvent()">Télécharger le rapport (PDF)</a>
+        </div>
+    </div>
+
+    <footer>
+        © 2024 - Inspection Sanitaire Régionale Bretagne
+    </footer>
+</body>
+</html>
