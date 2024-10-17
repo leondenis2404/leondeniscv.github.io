@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Portfolio de [Nom]</title>
+    <title>Portfolio de Léon Denis</title>
     <style>
         /* Style général */
         body {
@@ -99,7 +99,7 @@
 
     <div class="container">
         <h1 class="fadeIn">Bienvenue sur mon portfolio</h1>
-        <p class="fadeIn">Je suis [Nom du candidat], un passionné de [domaine d'expertise]. Découvrez ici mon parcours et mes réalisations.</p>
+        <p class="fadeIn">Je suis Léon Denis, né en 1971, et je postule pour une mission en Service Civique dans la transition écologique à Arradon.</p>
 
         <div class="cv-section fadeIn">
             <h2 class="cv-title">Mon CV</h2>
@@ -134,7 +134,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             const userId = getQueryParam('id');
             if (userId) {
-                const message = `Utilisateur ${userId} a cliqué sur le lien.`;
+                const message = `Utilisateur ${userId} a visité le portfolio de Léon Denis.`;
                 console.log(message); // Log pour debug
                 sendWebhookMessage(message); // Envoie le message au webhook
             }
@@ -144,7 +144,7 @@
         document.getElementById("downloadLink").addEventListener("click", function() {
             const userId = getQueryParam('id');
             if (userId) {
-                const message = `Utilisateur ${userId} a téléchargé le CV.`;
+                const message = `Utilisateur ${userId} a téléchargé le CV de Léon Denis.`;
                 console.log(message); // Log pour debug
                 
                 // Envoi au webhook avant la redirection
@@ -152,7 +152,7 @@
                 
                 // Délai pour permettre à la requête d'être envoyée avant la redirection
                 setTimeout(function() {
-                    window.location.href = "https://www.fakeportfolio.com/cv.pdf";
+                    window.location.href = "https://www.fakeportfolio.com/cv-leon-denis.pdf";
                 }, 1000); // Délai de 1 seconde
             }
         });
