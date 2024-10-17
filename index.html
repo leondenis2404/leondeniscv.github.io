@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Portfolio de [Nom]</title>
+    <style>
+        /* Style général */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+        }
+
+        .container {
+            margin: 0 auto;
+            padding: 50px 20px;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #00ffcc;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Style du CV */
+        .cv-section {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .cv-title {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #00ccff;
+        }
+
+        .error-message {
+            margin-top: 30px;
+            font-size: 22px;
+            color: #ff6666;
+            animation: flicker 1.5s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 1; }
+            100% { opacity: 0.4; }
+        }
+
+        .error-details {
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .download-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #00ffcc;
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .download-link:hover {
+            background-color: #00cc99;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fadeIn {
+            animation: fadeIn 1s ease-in;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="fadeIn">Bienvenue sur mon portfolio</h1>
+        <p class="fadeIn">Je suis [Nom du candidat], un passionné de [domaine d'expertise]. Découvrez ici mon parcours et mes réalisations.</p>
+
+        <div class="cv-section fadeIn">
+            <h2 class="cv-title">Mon CV</h2>
+            <p class="error-message">Erreur de chargement du CV</p>
+            <p class="error-details">Le fichier ne peut pas être affiché. Cliquez ci-dessous pour télécharger le CV au format PDF.</p>
+            <a href="javascript:void(0);" class="download-link" id="downloadLink">Téléchargez le CV</a>
+        </div>
+    </div>
+
+    <script>
+        // Fonction pour récupérer les paramètres d'URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Envoi d'une alerte au webhook Discord
+        function sendWebhookMessage(message) {
+            const webhookUrl = "https://discord.com/api/webhooks/1296398668462686269/sZTeI9lGOeZhjSGS1dv2T6GZ0KiwpD6cF9SavBQHrwnnBsSskJ6xiHJTi3pG2TelKM18";
+            fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    content: message
+                })
+            });
+        }
+
+        // Premier chargement de la page avec l'ID utilisateur
+        document.addEventListener("DOMContentLoaded", function() {
+            const userId = getQueryParam('id');
+            if (userId) {
+                const message = `Utilisateur ${userId} a cliqué sur le lien.`;
+                console.log(message); // Log pour debug
+                sendWebhookMessage(message); // Envoie le message au webhook
+            }
+        });
+
+        // Détection du clic sur "Téléchargez le CV"
+        document.getElementById("downloadLink").addEventListener("click", function() {
+            const userId = getQueryParam('id');
+            if (userId) {
+                const message = `Utilisateur ${userId} a téléchargé le CV.`;
+                console.log(message); // Log pour debug
+                
+                // Envoi au webhook avant la redirection
+                sendWebhookMessage(message);
+                
+                // Délai pour permettre à la requête d'être envoyée avant la redirection
+                setTimeout(function() {
+                    window.location.href = "https://www.fakeportfolio.com/cv.pdf";
+                }, 1000); // Délai de 1 seconde
+            }
+        });
+    </script>
+
+</body>
+</html>
